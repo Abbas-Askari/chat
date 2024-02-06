@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { receiveMessage, receiveRoom, setTyping } from "./slices/rooms-slice";
 import { receiveUser, setStatus } from "./slices/users-slice"; // Import removeUser action
 
-export const socket = io("http://localhost:3000", {
+export const socket = io(import.meta.env.VITE_BACKEND, {
   autoConnect: false,
 });
 

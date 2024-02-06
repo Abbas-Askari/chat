@@ -54,7 +54,7 @@ function Signup() {
     try {
       const validatedData = formSchema.parse(data);
       setErrors({});
-      const res = await fetch("http://localhost:3000/users", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

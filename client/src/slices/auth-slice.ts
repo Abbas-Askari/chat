@@ -13,14 +13,17 @@ export const updateUserAsync = createAsyncThunk(
     try {
       console.log({ user });
       const userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND}/users/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(user),
+        }
+      );
       console.log({ response });
       const { updatedUser, url } = await response.json();
       console.log({ updatedUser, url });
