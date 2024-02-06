@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User } from "../utils/types";
 
 type UserUpdate = {
-  name: string;
-  avatar: string;
-  newPassword: string;
+  name?: string;
+  avatar?: string;
+  newPassword?: string;
 };
 
 export const updateUserAsync = createAsyncThunk(

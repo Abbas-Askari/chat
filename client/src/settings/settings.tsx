@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { z } from "zod";
 import { logout, updateUserAsync } from "../slices/auth-slice";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z
   .object({
@@ -76,13 +76,13 @@ function Settings() {
                 <img src={user.avatar} alt="avatar" />
               ) : imageFile ? (
                 <img
-                  src={URL.createObjectURL(imageFile)}
+                  src={URL.createObjectURL(imageFile as Blob)}
                   alt="avatar"
                   className="rounded-full"
                 />
               ) : (
                 <span className="text-xl">
-                  {user.name
+                  {user!.name
                     .split(" ")
                     .map((word) => word[0])
                     .join("")}

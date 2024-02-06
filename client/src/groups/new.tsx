@@ -6,6 +6,7 @@ import UserAvatar from "../user-avatar";
 import { createRoomAsync } from "../slices/rooms-slice";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { User } from "../utils/types";
 
 const formSchema = z.object({
   name: z.string().min(3, {
@@ -25,7 +26,7 @@ function NewGroup() {
   const [search, setSearch] = useState("");
   let { users } = useAppSelector((state) => state.users);
   const { user } = useAppSelector((state) => state.auth);
-  const [participants, setParticipants] = useState<User[]>([user]);
+  const [participants, setParticipants] = useState<User[]>([user!]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const dispatch = useAppDispatch();

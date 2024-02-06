@@ -1,32 +1,9 @@
-import React, { useRef, useState } from "react";
-import { FileIcon, defaultStyles } from "react-file-icon";
+import { useRef, useState } from "react";
+import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
 import { Message, User } from "../utils/types";
 import { bytesToSize } from "../utils/general";
 import { useAppSelector } from "../utils/hooks";
-import { set } from "mongoose";
 import UserAvatar from "../user-avatar";
-
-function getFileIconType(type: string) {
-  const supportedTypes = [
-    "3d",
-    "acrobat",
-    "audio",
-    "binary",
-    "code",
-    "code2",
-    "compressed",
-    "document",
-    "drive",
-    "font",
-    "image",
-    "presentation",
-    "settings",
-    "spreadsheet",
-    "vector",
-    "video",
-  ];
-  return supportedTypes.find((t) => type.includes(t)) || "document";
-}
 
 function calculateTimeAgo(time: string) {
   const date = new Date(time);
@@ -67,12 +44,7 @@ function ChatMessage({
         showOnlineStatus={false}
       />
       <div className="chat-bubble p-0">
-        {message.attachment && (
-          <Attachment
-            hasContent={!!message.content}
-            attachment={message.attachment}
-          />
-        )}
+        {message.attachment && <Attachment attachment={message.attachment} />}
         {message.content && (
           <div
             className={` px-4 py-2 max-w-96 ${
@@ -91,13 +63,7 @@ function ChatMessage({
   );
 }
 
-function Attachment({
-  attachment,
-  hasContent,
-}: {
-  hasContent: boolean;
-  attachment: Message["attachment"];
-}) {
+function Attachment({ attachment }: { attachment: Message["attachment"] }) {
   const downloadFileName = attachment.name;
   const url = attachment.url.replaceAll(" ", "%20");
   const { uploadingAttachments } = useAppSelector((state) => state.rooms);
@@ -126,6 +92,9 @@ function Attachment({
     link.click();
   };
 
+  const splits = attachment.name.split(".");
+  const extension = splits[splits.length - 1];
+
   return (
     <div
       // className={`${
@@ -142,7 +111,7 @@ function Attachment({
           }}
           id={"image-" + attachment._id.toString()}
           title="Click to download"
-          onError={(e) => {
+          onError={() => {
             console.log("Error!");
             setBroken(true);
             setTimeout(() => {
@@ -167,8 +136,8 @@ function Attachment({
         <div className="flex gap-2 items-center pl-2">
           <div className="w-12">
             <FileIcon
-              {...defaultStyles[attachment.name.split(".").at(-1)]}
-              extension={attachment.name.split(".").at(-1)}
+              {...defaultStyles[extension as DefaultExtensionType]}
+              extension={extension}
             />{" "}
           </div>
           <div className="flex flex-col">

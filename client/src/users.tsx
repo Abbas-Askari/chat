@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
-import { Room, User } from "./utils/types";
-import { Link, useParams, useSearchParams } from "react-router-dom";
-import usersSlice, { fetchUsersAsync } from "./slices/users-slice";
-import { RootState } from "@reduxjs/toolkit/query";
-import { AppDispatch } from "./store";
+import { useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { fetchUsersAsync } from "./slices/users-slice";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
 import UserAvatar from "./user-avatar";
 
@@ -51,7 +48,7 @@ function Users() {
         <input
           type="text"
           name="q"
-          defaultValue={q}
+          defaultValue={q ?? ""}
           id="q"
           className=" w-0 flex-shrink bg-inherit outline-none placeholder:opacity-25 flex-1"
           placeholder="Search users"
@@ -60,7 +57,7 @@ function Users() {
           className="btn btn-xs btn-circle p-0 btn-ghost"
           type="button"
           onClick={() => {
-            document.getElementById("q")!.value = "";
+            (document.getElementById("q") as HTMLInputElement)!.value = "";
             setSearchParams({ q: "" });
           }}
         >

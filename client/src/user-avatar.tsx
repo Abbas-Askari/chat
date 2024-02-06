@@ -1,5 +1,4 @@
-import React from "react";
-import { Status, User } from "./utils/types";
+import { User } from "./utils/types";
 
 function UserAvatar({
   user,

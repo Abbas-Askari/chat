@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { io } from "socket.io-client";
 import { receiveMessage, receiveRoom, setTyping } from "./slices/rooms-slice";
 import { receiveUser, setStatus } from "./slices/users-slice"; // Import removeUser action
-import { store } from "./store";
 
 export const socket = io("http://localhost:3000", {
   autoConnect: false,

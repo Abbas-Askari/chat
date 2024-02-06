@@ -1,14 +1,7 @@
-import {
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Users from "./users";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
 import { useEffect } from "react";
-import { User } from "./utils/types";
 import { fetchRoomsAsync } from "./slices/rooms-slice";
 
 function Layout() {
