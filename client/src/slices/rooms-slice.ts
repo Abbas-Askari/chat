@@ -132,8 +132,10 @@ export const sendMessageAsync = createAsyncThunk(
         });
       }
 
+      console.log(`${import.meta.env.VITE_BACKEND}/rooms/${roomId}`);
+
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND}/${roomId}`,
+        `${import.meta.env.VITE_BACKEND}/rooms/${roomId}`,
         {
           method: "POST",
           headers: {
