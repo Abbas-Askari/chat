@@ -1,0 +1,9 @@
+PATCH  http://localhost:3000/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjhjMzM1YjkxYmU2ZTVjYjNkOGQ0OSIsImlhdCI6MTcwNjYzNzU2OH0.In-b9u8OQ7HYgG-wBi7kBLsDzC3tHTz34HkSZr-kajU
+
+{
+    "name": "John Doe",
+    "email": "abc2@test.com",
+    "password": "1256333"
+}
