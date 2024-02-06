@@ -8,7 +8,8 @@ export const fetchRoomsAsync = createAsyncThunk(
   async (_, { dispatch }) => {
     dispatch(setLoading(true));
     try {
-      const response = await fetch("http://localhost:3000/rooms", {
+      console.log(import.meta.env);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND}/rooms`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -41,7 +42,7 @@ export const createRoomAsync = createAsyncThunk(
   "rooms/createRoom",
   async ({ users, name }: { users: string[]; name?: string }, { dispatch }) => {
     try {
-      const response = await fetch(`http://localhost:3000/rooms/`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND}/rooms/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +103,7 @@ export const sendMessageAsync = createAsyncThunk(
       let attachment;
       if (file) {
         const { url, newAttachment } = await (
-          await fetch("http://localhost:3000/attachments", {
+          await fetch(`${import.meta.env.VITE_BACKEND}/attachments`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -131,14 +132,17 @@ export const sendMessageAsync = createAsyncThunk(
         });
       }
 
-      const response = await fetch(`http://localhost:3000/rooms/${roomId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ content: message, attachment }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND}/${roomId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ content: message, attachment }),
+        }
+      );
       const data = await response.json();
       if (attachment) data.attachment = attachment;
       socket.emit("message", data);

@@ -5,7 +5,7 @@ export const fetchUsersAsync = createAsyncThunk(
   "users/fetchUsers",
   async (_, { dispatch }) => {
     try {
-      const response = await fetch("http://localhost:3000/users");
+      const response = await fetch(`${import.meta.env.VITE_BACKEND}/users`);
       const data = await response.json();
       console.log("fetchUsersAsync", data);
       data.forEach((user: User) => {
