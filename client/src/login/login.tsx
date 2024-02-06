@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../utils/hooks";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { setToken, setUser } from "../slices/auth-slice";
 
 type Errors = {
@@ -14,6 +14,10 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -94,7 +98,7 @@ function LoginPage() {
         {errors.backend && (
           <div className="text-error text-xs text-center">{errors.backend}</div>
         )}
-        <button disabled={loading} className="btn btn-outline btn-primary">
+        <button disabled={loading} className="btn btn-primary">
           Login
           {loading && (
             <span className="loading loading-spinner loading-xs"></span>

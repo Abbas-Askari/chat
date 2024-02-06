@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Users from "./users";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
 import { useEffect } from "react";
@@ -8,7 +8,9 @@ function Layout() {
   const user = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  if (!user) {
+    return <Navigate to={"/login"} />;
+  }
   const { pathname } = useLocation();
 
   const atHome = pathname === "/";

@@ -7,6 +7,7 @@ import UserAvatar from "./user-avatar";
 function Users() {
   let { users } = useAppSelector((state) => state.users);
   const { user } = useAppSelector((state) => state.auth);
+
   const dispatch = useAppDispatch();
   let [searchParams, setSearchParams] = useSearchParams();
   const { rooms } = useAppSelector((state) => state.rooms);

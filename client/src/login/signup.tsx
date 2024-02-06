@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { useAppSelector } from "../utils/hooks";
 
 const formSchema = z
   .object({
@@ -40,6 +41,10 @@ function Signup() {
   const [errors, setErrors] = useState<errors>({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -91,7 +96,7 @@ function Signup() {
         className="bg-base-200 p-8 rounded-box flex flex-col gap-4  "
         onSubmit={handleSubmit}
       >
-        <h1 className="text-xl font-bold text-center">Login</h1>
+        <h1 className="text-xl font-bold text-center">Signup</h1>
         <label className="form-control w-full ">
           <div className="label py-0 gap-4">
             <span className="label-text text-base">Email: </span>
@@ -164,13 +169,13 @@ function Signup() {
         </label>
         <div className="text-center text-sm">
           Already have an account?{" "}
-          <Link to="/signup" className="text-primary">
+          <Link to="/login" className="text-primary">
             Login
           </Link>
         </div>
         <span className="text-error text-xs text-center">{errors.backend}</span>
-        <button disabled={loading} className="btn btn-outline btn-primary">
-          Login{" "}
+        <button disabled={loading} className="btn  btn-primary">
+          Sign up{" "}
           {loading && (
             <span className="loading loading-spinner loading-xs"></span>
           )}
