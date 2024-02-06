@@ -55,6 +55,7 @@ function Chat() {
     for (let file of files!) {
       dispatch(sendMessageAsync({ roomId: room!._id, message, file }));
     }
+    setFiles([]);
     // console.log("asdasd", message, content.value, filesInput.files);
     if (message === "") return;
     console.log("sending message", { message });
@@ -62,7 +63,6 @@ function Chat() {
       console.log({ message });
       dispatch(sendMessageAsync({ roomId: room!._id, message }));
     }
-    setFiles([]);
     content.value = "";
   }
 
