@@ -29,7 +29,12 @@ export const fetchRoomsAsync = createAsyncThunk(
 );
 
 function roomExists(rooms: Room[], roomId: string) {
-  if (rooms.some((room) => room._id === roomId)) return true;
+  if (
+    rooms
+      .filter((room) => room.users.length === 2)
+      .some((room) => room._id === roomId)
+  )
+    return true;
   return rooms.some(({ users }) => {
     if (users.length === 0) return false;
     if (typeof users[0] === "string")
