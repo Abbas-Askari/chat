@@ -29,12 +29,7 @@ export const fetchRoomsAsync = createAsyncThunk(
 );
 
 function roomExists(rooms: Room[], roomId: string) {
-  if (
-    rooms
-      .filter((room) => room.users.length === 2)
-      .some((room) => room._id === roomId)
-  )
-    return true;
+  if (rooms.some((room) => room._id === roomId)) return true;
   return rooms.some(({ users }) => {
     if (users.length === 0) return false;
     if (typeof users[0] === "string")
@@ -77,8 +72,9 @@ export const changeRoomAsync = createAsyncThunk(
       } else {
         let roomWithId = rooms.find((room) => room._id === roomId);
         if (!roomWithId) {
+          console.log("finding room with id", roomId);
           roomWithId = rooms.find(({ users }) => {
-            if (users.length === 0) return false;
+            if (users.length !== 2) return false;
             if (typeof users[0] === "string")
               return (users as string[]).includes(roomId);
             else

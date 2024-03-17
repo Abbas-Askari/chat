@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Attachment = require("../models/attachment");
 const Message = require("../models/message");
 const Room = require("../models/room");
@@ -64,6 +65,11 @@ async function getRoomsOfUser(req, res) {
     // const rooms = await Room.find({ users: req.user.id }).exec();
     const rooms = await Room.aggregate([
       {
+        $match: {
+          users: new mongoose.Types.ObjectId(req.user.id),
+        },
+      },
+      {
         $lookup: {
           from: "messages",
           localField: "_id",
@@ -71,23 +77,19 @@ async function getRoomsOfUser(req, res) {
           as: "messages",
         },
       },
-      // {
-      //   $match: {
-      //     users: req.user.id,
-      //   },
-      // },
+      // sort messages in descending order
       {
         $sort: {
           "messages.createdAt": -1,
         },
       },
-    ]);
+    ]).exec();
     const roomsPopulated = await Attachment.populate(rooms, {
       path: "messages.attachment",
     });
     res.json(roomsPopulated);
   } catch (err) {
-    console.log(err);
+    console.error("Error: ", err);
     res.json({ message: err.message, error: err });
   }
 }

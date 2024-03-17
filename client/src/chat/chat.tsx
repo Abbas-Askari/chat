@@ -68,6 +68,7 @@ function Chat() {
 
   useEffect(() => {
     if (!loading) {
+      console.log("changing room");
       dispatch(changeRoomAsync(userId!));
     }
   }, [userId, loading]);
@@ -80,13 +81,18 @@ function Chat() {
   if (!room) {
     return <div>Loading... {userId}</div>;
   }
+
   const participants = users.filter((user) =>
     room.users.some((id) => id === user._id)
   );
+  console.log({ participants, room });
   const name = extractRoomName(room, user!, participants);
 
   const otherUser =
-    participants.find((u) => u._id !== user!._id) || participants[0];
+    participants.find((u) => u._id.toString() !== user!._id.toString()) ||
+    participants[0];
+
+  console.log({ otherUser, user });
 
   const otherTypers = room.typers?.filter((id) => id !== user!._id) || [];
   const amITyping = room.typers?.includes(user!._id) || false;

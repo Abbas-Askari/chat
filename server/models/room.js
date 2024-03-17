@@ -25,11 +25,14 @@ const RoomSchema = new Schema({
 });
 
 const Room = mongoose.model("Room", RoomSchema);
-
-// Room.find()
-//   .exec()
-//   .then((rooms) => {
-//     console.log(rooms);
-//   });
-
+// Print groups having 3 or more members
+Room.find({
+  users: "65b8c335b91be6e5cb3d8d49",
+})
+  .populate("users")
+  .exec()
+  .then((data) =>
+    console.log(data.map((room) => room.users.map((user) => user.name)))
+  )
+  .catch((err) => console.log(err));
 module.exports = Room;
